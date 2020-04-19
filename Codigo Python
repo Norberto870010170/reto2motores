@@ -1,0 +1,45 @@
+
+import serial
+import time
+import csv
+ser = serial.Serial("/dev/ttyACM2",9600,timeout=1)
+def driveMotor(speed,  drct, drct2):
+     enA = speed
+     enB = speed
+     if drct == 1:
+        in1 = 1
+        in2 = 0
+
+     elif drct == -1:
+        in1 = 0
+        in2 = 1
+
+     else:
+        in1 = 0
+        in2 = 0
+
+     if drct2 == 1:
+        in3 = 1
+        in4 = 0
+
+     elif drct2 == -1:
+        in3 = 0
+        in4 = 1
+
+     else:
+        in3 = 0
+        in4 = 0
+
+
+     valList =[ str(enA) + ',' + str(in1) + ',' + str(in2) + ',' + str(in3) + ',' + str(in4) + ',' + str(enB)]
+     setString = ','.join(valList)
+     ser.write(setString)
+     time.sleep(0.1)
+
+while 1:
+     direction = int (input("direccion de motor1: "))
+     direction2 = int (input("direction de motor2: "))
+     speed = 255
+
+     driveMotor(speed, direction, direction2)
+
